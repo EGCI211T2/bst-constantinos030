@@ -22,29 +22,27 @@ public:
   void kill(TreeNodePtr);
 
 void BST::insert_node(int value) {
-  int inserted = 0;
+  bool inserted = false;
   TreeNodePtr new_node, t;
   new_node = new TreeNode(value);
   if (new_node) {
    
-   /*   if(First Node){
-          
+    if (size == 0) rootPtr = new_node;// Check for the new node using size, not robust but works better than checking for move_right and move_left
+    
+    else
+      {
+        t = rootPtr;
+        while (!inserted)
+        {
+          // Smaller Case
+          if (value <= t->get_value() && t->move_left()  != NULL) t = t -> move_left();
+          if (value <= t->get_value() && t->move_left()  == NULL){ t->set_left(new_node); inserted = true;};
+          //Bigger Case
+          if (value  >  t->get_value()&& t->move_right() != NULL) t = t -> move_right(); // Not the end of branch
+          if (value  >  t->get_value()&& t->move_right() == NULL){ t->set_right(new_node); inserted = true;}; // End of branch, make leaf
+        }
       }
-      else{
-          t=rootPtr;
-          while(!inserted){//insert =0
-              //once the location is found -->inserted=1
-              //1.should it go left or right
-              //2. should it be inserted, if availabble inserted, if not move
-              //3. once inserted make insert=1
-              
-              
-              
-          }// end while*/
-      
-      //}//ene else
-        ++size;
-  }//end  new node
+  }
 }
 
 
@@ -110,9 +108,12 @@ void printTree(TreeNodePtr treePtr,int l) {
 void postOrder(TreeNodePtr treePtr) {
   // TreeNodePtr treePtr=rootPtr;
   if (treePtr) {
- 
- 
-   
+ if (treePtr) {
+    // if tree is not empty, then traverse
+    inOrder(treePtr->move_left()); // Recursion to the left
+    inOrder(treePtr->move_right()); // Recursion to the right
+    cout << setw(3) << treePtr->get_value();
+  }  
   }                                          // end if
 } // end function
 
