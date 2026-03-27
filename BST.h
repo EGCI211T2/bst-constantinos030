@@ -27,7 +27,7 @@ void BST::insert_node(int value) {
   new_node = new TreeNode(value);
   if (new_node) {
    
-    if (size == 0) rootPtr = new_node;// Check for the new node using size, not robust but works better than checking for move_right and move_left
+    if (size == 0) {rootPtr = new_node; size = 1;}// Check for the new node using size, not robust but works better than checking for move_right and move_left
     
     else
       {
@@ -36,10 +36,10 @@ void BST::insert_node(int value) {
         {
           // Smaller Case
           if (value <= t->get_value() && t->move_left()  != NULL) t = t -> move_left();
-          if (value <= t->get_value() && t->move_left()  == NULL){ t->set_left(new_node); inserted = true;};
+          if (value <= t->get_value() && t->move_left()  == NULL){ t->set_left(new_node); inserted = true; size++;};
           //Bigger Case
           if (value  >  t->get_value()&& t->move_right() != NULL) t = t -> move_right(); // Not the end of branch
-          if (value  >  t->get_value()&& t->move_right() == NULL){ t->set_right(new_node); inserted = true;}; // End of branch, make leaf
+          if (value  >  t->get_value()&& t->move_right() == NULL){ t->set_right(new_node); inserted = true; size++;}; // End of branch, make leaf
         }
       }
   }
@@ -100,20 +100,21 @@ void inOrder(TreeNodePtr treePtr) {
   //printTree(rootPtr,0);
 
 void printTree(TreeNodePtr treePtr,int l) {
-  // TreeNodePtr treePtr=rootPtr;
-        // end if
+      if (treePtr) {
+       printTree(treePtr->move_right(),l+1); // Recursion to the right
+       cout << setw(3*l) << treePtr->get_value() << endl; // print the value
+       printTree(treePtr->move_left(),l+1); // Recursion to the left
+  }
 } // end function
 
 
 void postOrder(TreeNodePtr treePtr) {
   // TreeNodePtr treePtr=rootPtr;
-  if (treePtr) {
  if (treePtr) {
     // if tree is not empty, then traverse
     inOrder(treePtr->move_left()); // Recursion to the left
     inOrder(treePtr->move_right()); // Recursion to the right
     cout << setw(3) << treePtr->get_value();
-  }  
   }                                          // end if
 } // end function
 
@@ -127,8 +128,9 @@ void kill(TreeNodePtr treePtr) {
 
 void preOrder(TreeNodePtr treePtr) {
   if(treePtr){
-  // TreeNodePtr treePtr=rootPtr;
-   
+    inOrder(treePtr->move_left()); // Recursion to the left
+    inOrder(treePtr->move_right()); // Recursion to the right
+    cout << setw(3) << treePtr->get_value();
  
   }                                          // end if
 } // end function

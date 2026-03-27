@@ -6,7 +6,7 @@ class TreeNode {
 public:
         TreeNode(int); 
         ~TreeNode();
-        void set_left(TreeNode* t);
+        void set_left(TreeNode* t){leftPtr=t;}
         void set_right(TreeNode* t){rightPtr=t;}
         int get_value(){return data;}
         TreeNode* move_right(){ return rightPtr; }
@@ -18,10 +18,8 @@ public:
         
 
 typedef TreeNode * TreeNodePtr; 
-// synonym for TreeNode*
-void TreeNode::set_left(TreeNode *t){
-  leftPtr=t;
-}
+
+
 
 TreeNode::TreeNode(int x){
    data =x;
